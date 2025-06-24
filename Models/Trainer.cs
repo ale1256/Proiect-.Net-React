@@ -7,6 +7,7 @@ namespace AspNetApp.Models
         public string Expertise { get; set; } = string.Empty;
 
         // Navigation property for courses trainer teaches
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public ICollection<GymClass> GymClasses { get; set; } = new List<GymClass>();
+
     }
 }

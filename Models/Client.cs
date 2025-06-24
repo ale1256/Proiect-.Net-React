@@ -9,7 +9,9 @@ namespace AspNetApp.Models
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
 
-       
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+
+        public ICollection<GymClass> GymClasses { get; set; } = new List<GymClass>();
+
+        public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
     }
 }

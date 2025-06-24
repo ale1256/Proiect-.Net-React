@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AspNetApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612140704_SeedTrainersAndGymClasses")]
+    partial class SeedTrainersAndGymClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,31 +23,6 @@ namespace AspNetApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("AspNetApp.Models.ClassBooking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("GymClassId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GymClassId");
-
-                    b.ToTable("ClassBookings");
-                });
 
             modelBuilder.Entity("AspNetApp.Models.Client", b =>
                 {
@@ -129,46 +107,6 @@ namespace AspNetApp.Migrations
                             StartTime = new DateTime(2025, 6, 13, 10, 0, 0, 0, DateTimeKind.Utc),
                             TrainerId = 2,
                             TrainerName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 10,
-                            Name = "Pilates",
-                            SpotsLeft = 7,
-                            StartTime = new DateTime(2025, 6, 17, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 3,
-                            TrainerName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Capacity = 25,
-                            Name = "Zumba",
-                            SpotsLeft = 25,
-                            StartTime = new DateTime(2025, 6, 17, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 4,
-                            TrainerName = "Bob Brown"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Capacity = 15,
-                            Name = "Strength Training",
-                            SpotsLeft = 15,
-                            StartTime = new DateTime(2025, 6, 18, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 3,
-                            TrainerName = "Alice Johnson"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Capacity = 20,
-                            Name = "Cardio Blast",
-                            SpotsLeft = 20,
-                            StartTime = new DateTime(2025, 6, 18, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 1,
-                            TrainerName = "John Doe"
                         });
                 });
 
@@ -278,18 +216,6 @@ namespace AspNetApp.Migrations
                             Id = 2,
                             Expertise = "",
                             FullName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Expertise = "",
-                            FullName = "Alice Johnson"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Expertise = "",
-                            FullName = "Bob Brown"
                         });
                 });
 
@@ -528,17 +454,6 @@ namespace AspNetApp.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("AspNetApp.Models.ClassBooking", b =>
-                {
-                    b.HasOne("AspNetApp.Models.GymClass", "GymClass")
-                        .WithMany()
-                        .HasForeignKey("GymClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GymClass");
                 });
 
             modelBuilder.Entity("AspNetApp.Models.GymClass", b =>

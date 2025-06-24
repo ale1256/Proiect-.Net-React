@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AspNetApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612111647_SeedMemberships")]
+    partial class SeedMemberships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,31 +23,6 @@ namespace AspNetApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("AspNetApp.Models.ClassBooking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("GymClassId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GymClassId");
-
-                    b.ToTable("ClassBookings");
-                });
 
             modelBuilder.Entity("AspNetApp.Models.Client", b =>
                 {
@@ -75,7 +53,7 @@ namespace AspNetApp.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("AspNetApp.Models.GymClass", b =>
+            modelBuilder.Entity("AspNetApp.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,93 +61,22 @@ namespace AspNetApp.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SpotsLeft")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("TrainerName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("GymClasses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 20,
-                            Name = "HIIT",
-                            SpotsLeft = 20,
-                            StartTime = new DateTime(2025, 6, 13, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 1,
-                            TrainerName = "John Doe"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 15,
-                            Name = "Yoga",
-                            SpotsLeft = 15,
-                            StartTime = new DateTime(2025, 6, 13, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 2,
-                            TrainerName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 10,
-                            Name = "Pilates",
-                            SpotsLeft = 7,
-                            StartTime = new DateTime(2025, 6, 17, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 3,
-                            TrainerName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Capacity = 25,
-                            Name = "Zumba",
-                            SpotsLeft = 25,
-                            StartTime = new DateTime(2025, 6, 17, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 4,
-                            TrainerName = "Bob Brown"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Capacity = 15,
-                            Name = "Strength Training",
-                            SpotsLeft = 15,
-                            StartTime = new DateTime(2025, 6, 18, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 3,
-                            TrainerName = "Alice Johnson"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Capacity = 20,
-                            Name = "Cardio Blast",
-                            SpotsLeft = 20,
-                            StartTime = new DateTime(2025, 6, 18, 10, 0, 0, 0, DateTimeKind.Utc),
-                            TrainerId = 1,
-                            TrainerName = "John Doe"
-                        });
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("AspNetApp.Models.Membership", b =>
@@ -265,32 +172,6 @@ namespace AspNetApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Trainers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Expertise = "",
-                            FullName = "John Doe"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Expertise = "",
-                            FullName = "Jane Smith"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Expertise = "",
-                            FullName = "Alice Johnson"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Expertise = "",
-                            FullName = "Bob Brown"
-                        });
                 });
 
             modelBuilder.Entity("AspNetApp.Models.UserMembership", b =>
@@ -319,19 +200,19 @@ namespace AspNetApp.Migrations
                     b.ToTable("UserMemberships");
                 });
 
-            modelBuilder.Entity("ClientGymClass", b =>
+            modelBuilder.Entity("ClientCourse", b =>
                 {
                     b.Property<int>("ClientsId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("GymClassesId")
+                    b.Property<int>("CoursesId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ClientsId", "GymClassesId");
+                    b.HasKey("ClientsId", "CoursesId");
 
-                    b.HasIndex("GymClassesId");
+                    b.HasIndex("CoursesId");
 
-                    b.ToTable("ClientGymClasses", (string)null);
+                    b.ToTable("ClientCourses", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -530,21 +411,10 @@ namespace AspNetApp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AspNetApp.Models.ClassBooking", b =>
-                {
-                    b.HasOne("AspNetApp.Models.GymClass", "GymClass")
-                        .WithMany()
-                        .HasForeignKey("GymClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GymClass");
-                });
-
-            modelBuilder.Entity("AspNetApp.Models.GymClass", b =>
+            modelBuilder.Entity("AspNetApp.Models.Course", b =>
                 {
                     b.HasOne("AspNetApp.Models.Trainer", "Trainer")
-                        .WithMany("GymClasses")
+                        .WithMany("Courses")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -571,7 +441,7 @@ namespace AspNetApp.Migrations
                     b.Navigation("Membership");
                 });
 
-            modelBuilder.Entity("ClientGymClass", b =>
+            modelBuilder.Entity("ClientCourse", b =>
                 {
                     b.HasOne("AspNetApp.Models.Client", null)
                         .WithMany()
@@ -579,9 +449,9 @@ namespace AspNetApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AspNetApp.Models.GymClass", null)
+                    b.HasOne("AspNetApp.Models.Course", null)
                         .WithMany()
-                        .HasForeignKey("GymClassesId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -644,7 +514,7 @@ namespace AspNetApp.Migrations
 
             modelBuilder.Entity("AspNetApp.Models.Trainer", b =>
                 {
-                    b.Navigation("GymClasses");
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

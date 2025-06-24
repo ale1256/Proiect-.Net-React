@@ -9,7 +9,10 @@ namespace AspNetApp.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; } = string.Empty;
+        [ForeignKey("Client")]
+        public int ClientId { get; set; }  
+
+        public Client Client { get; set; }  
 
         [ForeignKey("Membership")]
         public int MembershipId { get; set; }
