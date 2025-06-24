@@ -1,0 +1,35 @@
+.membership-section {
+  background: #f8f9fa;
+}
+
+.membership-card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.membership-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+}
+
+.membership-card .card-body {
+  padding: 2rem;
+}
+
+.membership-card .btn-success {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s ease;
+}
+
+.membership-card .btn-success:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.membership-price {
+  color: #007bff;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
